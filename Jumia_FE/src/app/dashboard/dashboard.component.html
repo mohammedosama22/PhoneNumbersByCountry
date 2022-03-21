@@ -1,0 +1,64 @@
+<top-bar></top-bar>
+<div class="container">
+  <div class="row justify-content-center" style="margin-top: 100px;margin-bottom: 10px">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="row" style="margin-top: 10px">
+          <div class="col-md-1"></div>
+          <div class="col-md-3">
+            <select class="form-control" [(ngModel)]="country" (change)="changeCountry()">
+              <option value="" selected disabled hidden> Select Country</option>
+              <option *ngFor="let c of countryList" [value]="c.country"> {{c.country}}</option>
+            </select>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3">
+            <div class="form-inline">
+              <select class="form-control" [(ngModel)]="state" (change)="changeState()" *ngIf="country!=''">
+                <option value="" selected disabled hidden>Select State</option>
+                <option value="valid"> Valid</option>
+                <option value="notValid"> Not Valid</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-primary" (click)="clearAll()">Clear All</button>
+          </div>
+        </div>
+        <div class="card-body ">
+          <table class="table table-hover tableOfCustmoers">
+            <thead>
+            <tr style="text-align: center">
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="let customer of data | paginate: { id: 'pager', itemsPerPage: pageSize, currentPage: pageNumber ,totalItems:totalCount};let index = index">
+              <td>{{customer.id}}</td>
+              <td>{{customer.name}}</td>
+              <td>{{customer.phone}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <form class="pagination-wrapper">
+            <div class="form-group pages">
+              <pagination-controls class="my-pagination" id="pager" (pageChange)="pageChanged($event)" maxSize="5"
+                                   align="right"
+                                   directionLinks="true"
+                                   autoHide="true" previousLabel="Prev" nextLabel="Next"
+                                   screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                   screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
+
